@@ -1,0 +1,8 @@
+[general]
+name=Point displacement
+description=Point displacement plugin
+category=Vector
+version=Version 0.0.2
+authorName=NextGIS (Alexander Bruy)
+icon=displacement.png
+qgisMinimumVersion=1.0.0
