@@ -112,7 +112,7 @@ class ShiftPointsPlugin( object ):
     version = QLabel( QApplication.translate( "ShiftPoints", "Version: %1" ).arg( mVersion ) )
     version.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
     lines.addWidget( version )
-    lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "Generate regular points inside polygon" ) ) )
+    lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "Moves overlapped points with same\ncoordinates in a circle around the\noriginal position." ) ) )
     lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "<b>Developers:</b>" ) ) )
     lines.addWidget( QLabel( "  Alexander Bruy" ) )
     lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "<b>Homepage:</b>") ) )
