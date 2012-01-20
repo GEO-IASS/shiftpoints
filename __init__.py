@@ -46,7 +46,7 @@ def authorName():
 	return "Alexander Bruy (NextGIS)"
 
 def icon():
-	return "displacement.png"
+	return "icons/displacement.png"
 
 def classFactory( iface ):
 	from displacement import DisplacementPlugin
