@@ -32,7 +32,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from shiftpointsdialogbase import Ui_ShiftPointsDialog
+from ui_shiftpointsdialogbase import Ui_ShiftPointsDialog
 
 import math
 
@@ -49,7 +49,7 @@ class ShiftPointsDialog( QDialog, Ui_ShiftPointsDialog ):
     self.btnOk = self.buttonBox.button( QDialogButtonBox.Ok )
     self.btnClose = self.buttonBox.button( QDialogButtonBox.Close )
 
-    QObject.connect( self.btnSelectFile, SIGNAL( "clicked()" ), self.outFile )
+    QObject.connect( self.btnBrowse, SIGNAL( "clicked()" ), self.outFile )
 
     self.manageGui()
 

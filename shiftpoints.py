@@ -78,7 +78,7 @@ class ShiftPointsPlugin( object ):
 
     self.actionRun = QAction( QIcon( ":/icons/shiftpoints.png" ), "Shift points", self.iface.mainWindow() )
     self.actionRun.setStatusTip( QCoreApplication.translate( "ShiftPoints", "Moves overlapped points with same coordinates in a circle" ) )
-    self.actionAbout = QAction( QIcon( ":/about.png" ), "About Shift points", self.iface.mainWindow() )
+    self.actionAbout = QAction( QIcon( ":/icons/about.png" ), "About Shift points", self.iface.mainWindow() )
 
     QObject.connect( self.actionRun, SIGNAL( "triggered()" ), self.run )
     QObject.connect( self.actionAbout, SIGNAL( "triggered()" ), self.about )
