@@ -37,6 +37,7 @@ $(RES_FILES): $(RES_PATH)/%_rc.py: $(RES_PATH)/%.qrc
 
 clean:
 	rm -f $(ALL_FILES)
+	rm -f *.pyc
 
 package:
 	cd .. && rm -f shiftpoints.zip && zip -r shiftpoints.experimental.zip shiftpoints -x \*.pyc -x \*~ -x \*.git\*
