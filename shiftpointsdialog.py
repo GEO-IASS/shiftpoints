@@ -105,7 +105,7 @@ class ShiftPointsDialog( QDialog, Ui_ShiftPointsDialog ):
 
     if self.chkAddToCanvas.isChecked():
       if not addShapeToCanvas( unicode( self.outFileName ) ):
-        QMessageBox.warning( self, self.tr( "Point displacement" ), self.tr( "Error loading output shapefile:\n%1" ).arg( unicode( self.outFileName ) ) )
+        QMessageBox.warning( self, self.tr( "Shift Points" ), self.tr( "Error loading output shapefile:\n%1" ).arg( unicode( self.outFileName ) ) )
 
     self.restoreGui()
 
