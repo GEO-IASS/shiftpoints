@@ -3,6 +3,17 @@ name=Point displacement
 description=Point displacement plugin
 category=Vector
 version=Version 0.0.2
-authorName=NextGIS (Alexander Bruy)
-icon=displacement.png
 qgisMinimumVersion=1.0.0
+
+icon=displacement.png
+
+authorName=Alexander Bruy (NextGIS)
+
+tags=vector, point, displacement
+
+homepage=http://www.itopen.it
+tracker=http://bugs.itopen.it
+repository=http://www.itopen.it/repo
+
+experimental=True
+deprecated=False
