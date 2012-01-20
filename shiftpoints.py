@@ -73,7 +73,7 @@ class ShiftPointsPlugin( object ):
     if int( self.QgisVersion ) < 1:
       QMessageBox.warning( self.iface.mainWindow(), "Shift Points",
                            QCoreApplication.translate( "Shift Points", "Quantum GIS version detected: " ) + unicode( self.QgisVersion ) + ".xx\n" +
-                           QCoreApplication.translate( "Shift Points", "This version of Point displacement requires at least QGIS version 1.0.0\nPlugin will not be enabled." ) )
+                           QCoreApplication.translate( "Shift Points", "This version of Shift Points requires at least QGIS version 1.0.0\nPlugin will not be enabled." ) )
       return None
 
     self.actionRun = QAction( QIcon( ":/icons/shiftpoints.png" ), "Shift points", self.iface.mainWindow() )
