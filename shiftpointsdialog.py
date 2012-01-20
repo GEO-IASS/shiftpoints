@@ -2,9 +2,10 @@
 
 #******************************************************************************
 #
-# Point Displacement
+# ShiftPoints
 # ---------------------------------------------------------
-# Point displacement plugin
+# Moves overlapped points with same coordinates in a circle around the
+# original position.
 #
 # Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com)
 #
@@ -31,11 +32,11 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from displacementdialogbase import Ui_DisplacementDialog
+from ui_shiftpointsdialogbase import Ui_ShiftPointsDialog
 
 import math
 
-class DisplacementDialog( QDialog, Ui_DisplacementDialog ):
+class ShiftPointsDialog( QDialog, Ui_ShiftPointsDialog ):
   def __init__( self, iface ):
     QDialog.__init__( self )
     self.setupUi( self )
@@ -48,7 +49,7 @@ class DisplacementDialog( QDialog, Ui_DisplacementDialog ):
     self.btnOk = self.buttonBox.button( QDialogButtonBox.Ok )
     self.btnClose = self.buttonBox.button( QDialogButtonBox.Close )
 
-    QObject.connect( self.btnSelectFile, SIGNAL( "clicked()" ), self.outFile )
+    QObject.connect( self.btnBrowse, SIGNAL( "clicked()" ), self.outFile )
 
     self.manageGui()
 
@@ -104,7 +105,7 @@ class DisplacementDialog( QDialog, Ui_DisplacementDialog ):
 
     if self.chkAddToCanvas.isChecked():
       if not addShapeToCanvas( unicode( self.outFileName ) ):
-        QMessageBox.warning( self, self.tr( "Point displacement" ), self.tr( "Error loading output shapefile:\n%1" ).arg( unicode( self.outFileName ) ) )
+        QMessageBox.warning( self, self.tr( "Shift Points" ), self.tr( "Error loading output shapefile:\n%1" ).arg( unicode( self.outFileName ) ) )
 
     self.restoreGui()
 
@@ -125,7 +126,7 @@ class DisplacementDialog( QDialog, Ui_DisplacementDialog ):
 
 # ----------------------------------------------------------------------
 
-class DisplacementThread( QThread ):
+class ShiftPointsThread( QThread ):
   def __init__( self, inVector, outputFileName, outputEncoding ):
     QThread.__init__( self, QThread.currentThread() )
 
@@ -263,7 +264,7 @@ def saveDialog( parent ):
   dirName = settings.value( "/UI/lastShapefileDir" ).toString()
   filtering = QString( "Shapefiles (*.shp)" )
   encode = settings.value( "/UI/encoding" ).toString()
-  title = QCoreApplication.translate( "MergeShapesDialog", "Save output shapefile" )
+  title = QCoreApplication.translate( "ShiftPointsDialog", "Save output shapefile" )
   fileDialog = QgsEncodingFileDialog( parent, title, dirName, filtering, encode )
   fileDialog.setDefaultSuffix( QString( "shp" ) )
   fileDialog.setFileMode( QFileDialog.AnyFile )

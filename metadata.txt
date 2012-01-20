@@ -1,19 +1,19 @@
 [general]
-name = Point displacement
-description = Point displacement plugin
+name = Shift Points
+description = Moves overlapped points in a circle around original position
 category = Vector
-version = 0.0.2
+version = 0.1.0
 qgisMinimumVersion = 1.0.0
 
-icon = icons/displacement.png
+icon = icons/shiftpoints.png
 
 authorName=Alexander Bruy (NextGIS)
 
 tags=vector, point, displacement
 
 homepage = http://gis-lab.info
-tracker = http://hub.qgis.org/projects/
-repository = http://github.com/alexbruy/
+tracker = http://hub.qgis.org/projects/shiftpoints
+repository = http://github.com/alexbruy/shiftpoints
 
 experimental = True
 deprecated = False
