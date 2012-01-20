@@ -1,21 +1,21 @@
-Point displacement
+Shift Points
 ----------------------------------------
-Point displacement is a simple QGIS Python plugin used to modify point
-shapefiles where several point features have the same position. With the
-normal display, it is hard to see if several features overlap.
+Shift Points is a simple QGIS Python plugin used to modify point shapefiles
+where several point features have the same position. With the normal display,
+it is hard to see if several features overlap.
 
-The Point displacement plugin moves such features in a circle around the
-'real' original position. As you can see this is very close to work of the
-Point displacement renderer in QGIS. But while renderer only works in
+The Shift Points plugin moves such features in a circle around the 'real'
+original position. As you can see this is very close to work of the
+'Point displacement' renderer in QGIS. But while renderer only works in
 render-time, this plugin creates new shapefile with shifted (displaced)
 features.
 
 Source code can be found at:
-http://github.com/alexbruy/
+http://github.com/alexbruy/shiftpoints
 
 For bugreports please visit:
-http://hub.qgis.org/projects/
+http://hub.qgis.org/projects/shiftpoints
 
 
-NextGIS - Open source geospatial solutions
-http://nextgis.org
+        NextGIS - Open source geospatial solutions
+                    http://nextgis.org

@@ -2,9 +2,10 @@
 
 #******************************************************************************
 #
-# Point Displacement
+# ShiftPoints
 # ---------------------------------------------------------
-# Point displacement plugin
+# Moves overlapped points with same coordinates in a circle around the
+# original position.
 #
 # Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com)
 #
@@ -33,22 +34,23 @@ from qgis.gui import *
 
 from __init__ import mVersion
 
-import displacementdialog
+import shiftpointsdialog
 
-import resources
+import resources_rc
 
-class DisplacementPlugin( object ):
+class ShiftPointsPlugin( object ):
   def __init__( self, iface ):
     self.iface = iface
     self.iface = iface
+
     try:
       self.QgisVersion = unicode( QGis.QGIS_VERSION_INT )
     except:
       self.QgisVersion = unicode( QGis.qgisVersion )[ 0 ]
 
     # For i18n support
-    userPluginPath = QFileInfo( QgsApplication.qgisUserDbFilePath() ).path() + "/python/plugins/displacement"
-    systemPluginPath = QgsApplication.prefixPath() + "/python/plugins/displacement"
+    userPluginPath = QFileInfo( QgsApplication.qgisUserDbFilePath() ).path() + "/python/plugins/shiftpoints"
+    systemPluginPath = QgsApplication.prefixPath() + "/python/plugins/shiftpoints"
 
     overrideLocale = QSettings().value( "locale/overrideFlag", QVariant( False ) ).toBool()
     if not overrideLocale:
@@ -57,9 +59,9 @@ class DisplacementPlugin( object ):
       localeFullName = QSettings().value( "locale/userLocale", QVariant( "" ) ).toString()
 
     if QFileInfo( userPluginPath ).exists():
-      translationPath = userPluginPath + "/i18n/displacement_" + localeFullName + ".qm"
+      translationPath = userPluginPath + "/i18n/shiftpoints_" + localeFullName + ".qm"
     else:
-      translationPath = systemPluginPath + "/i18n/displacement_" + localeFullName + ".qm"
+      translationPath = systemPluginPath + "/i18n/shiftpoints_" + localeFullName + ".qm"
 
     self.localePath = translationPath
     if QFileInfo( self.localePath ).exists():
@@ -69,51 +71,51 @@ class DisplacementPlugin( object ):
 
   def initGui( self ):
     if int( self.QgisVersion ) < 1:
-      QMessageBox.warning( self.iface.mainWindow(), "Point displacement",
-                           QCoreApplication.translate( "Point displacement", "Quantum GIS version detected: " ) + unicode( self.QgisVersion ) + ".xx\n" +
-                           QCoreApplication.translate( "Point displacement", "This version of Point displacement requires at least QGIS version 1.0.0\nPlugin will not be enabled." ) )
+      QMessageBox.warning( self.iface.mainWindow(), "Shift Points",
+                           QCoreApplication.translate( "Shift Points", "Quantum GIS version detected: " ) + unicode( self.QgisVersion ) + ".xx\n" +
+                           QCoreApplication.translate( "Shift Points", "This version of Point displacement requires at least QGIS version 1.0.0\nPlugin will not be enabled." ) )
       return None
 
-    self.actionRun = QAction( QIcon( ":/displacement.png" ), "Point displacement", self.iface.mainWindow() )
-    self.actionRun.setStatusTip( QCoreApplication.translate( "Point displacement", "Generate regular points inside polygon" ) )
-    self.actionAbout = QAction( QIcon( ":/about.png" ), "About", self.iface.mainWindow() )
+    self.actionRun = QAction( QIcon( ":/icons/shiftpoints.png" ), "Shift points", self.iface.mainWindow() )
+    self.actionRun.setStatusTip( QCoreApplication.translate( "ShiftPoints", "Moves overlapped points with same coordinates in a circle" ) )
+    self.actionAbout = QAction( QIcon( ":/about.png" ), "About Shift points", self.iface.mainWindow() )
 
     QObject.connect( self.actionRun, SIGNAL( "triggered()" ), self.run )
     QObject.connect( self.actionAbout, SIGNAL( "triggered()" ), self.about )
 
     if hasattr( self.iface, "addPluginToVectorMenu" ):
-      self.iface.addPluginToVectorMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionRun )
-      self.iface.addPluginToVectorMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionAbout )
+      self.iface.addPluginToVectorMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionRun )
+      self.iface.addPluginToVectorMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionAbout )
       self.iface.addVectorToolBarIcon( self.actionRun )
     else:
-      self.iface.addPluginToMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionRun )
-      self.iface.addPluginToMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionAbout )
+      self.iface.addPluginToMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionRun )
+      self.iface.addPluginToMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionAbout )
       self.iface.addToolBarIcon( self.actionRun )
 
   def unload( self ):
     if hasattr( self.iface, "addPluginToVectorMenu" ):
-      self.iface.removePluginVectorMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionRun )
-      self.iface.removePluginVectorMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionAbout )
+      self.iface.removePluginVectorMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionRun )
+      self.iface.removePluginVectorMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionAbout )
       self.iface.removeVectorToolBarIcon( self.actionRun )
     else:
-      self.iface.removePluginMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionRun )
-      self.iface.removePluginMenu( QCoreApplication.translate( "Point displacement", "Point displacement" ), self.actionAbout )
-      self.iface.removeToolBarIcon( self.actionRun )      
+      self.iface.removePluginMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionRun )
+      self.iface.removePluginMenu( QCoreApplication.translate( "ShiftPoints", "Shift points" ), self.actionAbout )
+      self.iface.removeToolBarIcon( self.actionRun )
 
   def about( self ):
     dlgAbout = QDialog()
-    dlgAbout.setWindowTitle( QApplication.translate( "Point displacement", "About Point displacement", "Window title" ) )
+    dlgAbout.setWindowTitle( QApplication.translate( "ShiftPoints", "About Shift Points", "Window title" ) )
     lines = QVBoxLayout( dlgAbout )
-    title = QLabel( QApplication.translate( "Point displacement", "<b>GenPoints</b>" ) )
+    title = QLabel( QApplication.translate( "ShiftPoints", "<b>Shift Points</b>" ) )
     title.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
     lines.addWidget( title )
-    version = QLabel( QApplication.translate( "Point displacement", "Version: %1" ).arg( mVersion ) )
+    version = QLabel( QApplication.translate( "ShiftPoints", "Version: %1" ).arg( mVersion ) )
     version.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
     lines.addWidget( version )
-    lines.addWidget( QLabel( QApplication.translate( "Point displacement", "Generate regular points inside polygon" ) ) )
-    lines.addWidget( QLabel( QApplication.translate( "Point displacement", "<b>Developers:</b>" ) ) )
+    lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "Generate regular points inside polygon" ) ) )
+    lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "<b>Developers:</b>" ) ) )
     lines.addWidget( QLabel( "  Alexander Bruy" ) )
-    lines.addWidget( QLabel( QApplication.translate( "Point displacement", "<b>Homepage:</b>") ) )
+    lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "<b>Homepage:</b>") ) )
 
     overrideLocale = QSettings().value( "locale/overrideFlag", QVariant( False ) ).toBool()
     if not overrideLocale:
@@ -123,19 +125,19 @@ class DisplacementPlugin( object ):
 
     localeShortName = localeFullName[ 0:2 ]
     if localeShortName in [ "ru", "uk" ]:
-      link = QLabel( "<a href=\"http://gis-lab.info/qa/displacement.html\">http://gis-lab.info/qa/displacement.html</a>" )
+      link = QLabel( "<a href=\"http://gis-lab.info/qa/shiftpoints.html\">http://gis-lab.info/qa/shiftpoints.html</a>" )
     else:
-      link = QLabel( "<a href=\"http://gis-lab.info/qa/displacement-eng.html\">http://gis-lab.info/qa/displacement-eng.html</a>" )
+      link = QLabel( "<a href=\"http://gis-lab.info/qa/shiftpoints-eng.html\">http://gis-lab.info/qa/shiftpoints-eng.html</a>" )
 
     link.setOpenExternalLinks( True )
     lines.addWidget( link )
 
-    btnClose = QPushButton( QApplication.translate( "Point displacement", "Close" ) )
+    btnClose = QPushButton( QApplication.translate( "ShiftPoints", "Close" ) )
     lines.addWidget( btnClose )
     QObject.connect( btnClose, SIGNAL( "clicked()" ), dlgAbout, SLOT( "close()" ) )
 
     dlgAbout.exec_()
 
   def run( self ):
-    dlg = displacementdialog.DisplacementDialog( self.iface )
+    dlg = shiftpointsdialog.ShiftPointsDialog( self.iface )
     dlg.exec_()

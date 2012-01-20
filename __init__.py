@@ -4,9 +4,10 @@ mVersion = "0.0.2"
 
 #******************************************************************************
 #
-# Point Displacement
+# ShiftPoints
 # ---------------------------------------------------------
-# Point displacement plugin
+# Moves overlapped points with same coordinates in a circle around the
+# original position.
 #
 # Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com)
 #
@@ -28,27 +29,26 @@ mVersion = "0.0.2"
 #******************************************************************************
 
 def name():
-	return "Point displacement"
+  return "Shift Points"
 
 def description():
-	return "Point displacement plugin"
+  return "Moves overlapped points in a circle around original position"
 
 def category():
-	return "Vector"
+  return "Vector"
 
 def version():
-	return mVersion
+  return mVersion
 
 def qgisMinimumVersion():
-	return "1.0"
+  return "1.0"
 
 def authorName():
-	return "Alexander Bruy (NextGIS)"
+  return "Alexander Bruy (NextGIS)"
 
 def icon():
-	return "icons/displacement.png"
+  return "icons/shiftpoints.png"
 
 def classFactory( iface ):
-	from displacement import DisplacementPlugin
-	return DisplacementPlugin( iface )
-
+  from shiftpoints import ShiftPointsPlugin
+  return ShiftPointsPlugin( iface )

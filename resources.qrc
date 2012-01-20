@@ -1,6 +1,6 @@
 <RCC>
   <qresource>
-    <file>icons/displacement.png</file>
+    <file>icons/shiftpoints.png</file>
     <file>icons/about.png</file>
   </qresource>
 </RCC>
