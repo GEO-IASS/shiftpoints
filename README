@@ -10,6 +10,10 @@ original position. As you can see this is very close to work of the
 render-time, this plugin creates new shapefile with shifted (displaced)
 features.
 
+For more info please visit:
+ * in Russian http://gis-lab.info/qa/point-displacement.html
+ * in English http://gis-lab.info/qa/point-displacement-eng.html
+
 Source code can be found at:
 http://github.com/alexbruy/shiftpoints
 
