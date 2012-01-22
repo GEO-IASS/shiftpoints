@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>392</width>
+    <width>463</width>
     <height>234</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
+   <item row="0" column="2">
     <widget class="QComboBox" name="cmbInputLayer"/>
    </item>
    <item row="2" column="0" colspan="2">
@@ -86,7 +86,7 @@
    <item row="3" column="0" colspan="3">
     <widget class="QCheckBox" name="chkRotate">
      <property name="text">
-      <string>Place points horizontally if count == 2</string>
+      <string>For two point case distribute horizontally (otherwise vertically)</string>
      </property>
     </widget>
    </item>
