@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-mVersion = "0.1.0"
+mVersion = "0.2.0"
 
 #******************************************************************************
 #
@@ -9,7 +9,7 @@ mVersion = "0.1.0"
 # Moves overlapped points with same coordinates in a circle around the
 # original position.
 #
-# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com)
+# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com), NextGIS
 #
 # This source is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
@@ -41,7 +41,7 @@ def version():
   return mVersion
 
 def qgisMinimumVersion():
-  return "1.0"
+  return "1.0.0"
 
 def authorName():
   return "Alexander Bruy (NextGIS)"

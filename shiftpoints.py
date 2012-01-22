@@ -7,7 +7,7 @@
 # Moves overlapped points with same coordinates in a circle around the
 # original position.
 #
-# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com)
+# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com), NextGIS
 #
 # This source is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
@@ -125,9 +125,9 @@ class ShiftPointsPlugin( object ):
 
     localeShortName = localeFullName[ 0:2 ]
     if localeShortName in [ "ru", "uk" ]:
-      link = QLabel( "<a href=\"http://gis-lab.info/qa/shiftpoints.html\">http://gis-lab.info/qa/shiftpoints.html</a>" )
+      link = QLabel( "<a href=\"http://gis-lab.info/qa/point-displacement.html\">http://gis-lab.info/qa/point-displacement.html</a>" )
     else:
-      link = QLabel( "<a href=\"http://gis-lab.info/qa/shiftpoints-eng.html\">http://gis-lab.info/qa/shiftpoints-eng.html</a>" )
+      link = QLabel( "<a href=\"http://gis-lab.info/qa/point-displacement-eng.html\">http://gis-lab.info/qa/point-displacement-eng.html</a>" )
 
     link.setOpenExternalLinks( True )
     lines.addWidget( link )
