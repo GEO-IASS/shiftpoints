@@ -7,7 +7,7 @@
 # Moves overlapped points with same coordinates in a circle around the
 # original position.
 #
-# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com)
+# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com), NextGIS
 #
 # This source is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
