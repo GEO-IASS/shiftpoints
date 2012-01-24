@@ -40,7 +40,8 @@ clean:
 	rm -f *.pyc
 
 package:
-	cd .. && rm -f shiftpoints.zip && zip -r shiftpoints.experimental.zip shiftpoints -x \*.pyc -x \*~ -x \*.git\*
+	cd .. && rm -f shiftpoints*.zip && zip -r shiftpoints.experimental.zip shiftpoints -x \*.pyc -x \*~ -x \*.git\*
+	mv ../shiftpoints.experimental.zip .
 
 upload:
-	plugin_uploader.py ../shiftpoints.experimental.zip
+	plugin_uploader.py shiftpoints.experimental.zip
