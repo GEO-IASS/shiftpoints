@@ -32,7 +32,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from __init__ import mVersion
+from __init__ import version
 
 import shiftpointsdialog
 
@@ -109,9 +109,9 @@ class ShiftPointsPlugin( object ):
     title = QLabel( QApplication.translate( "ShiftPoints", "<b>Shift Points</b>" ) )
     title.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
     lines.addWidget( title )
-    version = QLabel( QApplication.translate( "ShiftPoints", "Version: %1" ).arg( mVersion ) )
-    version.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
-    lines.addWidget( version )
+    ver = QLabel( QApplication.translate( "ShiftPoints", "Version: %1" ).arg( version() ) )
+    ver.setAlignment( Qt.AlignHCenter | Qt.AlignVCenter )
+    lines.addWidget( ver )
     lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "Moves overlapped points with same\ncoordinates in a circle around the\noriginal position." ) ) )
     lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "<b>Developers:</b>" ) ) )
     lines.addWidget( QLabel( "  Alexander Bruy" ) )
