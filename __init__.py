@@ -36,7 +36,7 @@ def category():
   return "Vector"
 
 def version():
-  return "0.2.0"
+  return "0.2.1"
 
 def qgisMinimumVersion():
   return "1.0.0"
