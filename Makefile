@@ -38,10 +38,11 @@ $(RES_FILES): $(RES_PATH)/%_rc.py: $(RES_PATH)/%.qrc
 clean:
 	rm -f $(ALL_FILES)
 	rm -f *.pyc
+	rm -f *.zip
 
 package:
-	cd .. && rm -f *.zip && zip -r shiftpoints.experimental.zip shiftpoints -x \*.pyc -x \*~ -x \*.git\*
-	mv ../shiftpoints.experimental.zip .
+	cd .. && rm -f *.zip && zip -r shiftpoints.zip shiftpoints -x \*.pyc \*.ts \*.ui \*.qrc \*.pro \*~ \*.git\* \*Makefile*
+	mv ../shiftpoints.zip .
 
 upload:
-	plugin_uploader.py shiftpoints.experimental.zip
+	plugin_uploader.py shiftpoints.zip

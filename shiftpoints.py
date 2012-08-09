@@ -132,6 +132,11 @@ class ShiftPointsPlugin( object ):
     link.setOpenExternalLinks( True )
     lines.addWidget( link )
 
+    lines.addWidget( QLabel( QApplication.translate( "ShiftPoints", "<b>Report bugs at:</b>") ) )
+    linkBugs = QLabel( "<a href=\"http://hub.qgis.org/projects/shiftpoints\">http://hub.qgis.org/projects/shiftpoints</a>" )
+    linkBugs.setOpenExternalLinks( True )
+    lines.addWidget( linkBugs )
+
     btnClose = QPushButton( QApplication.translate( "ShiftPoints", "Close" ) )
     lines.addWidget( btnClose )
     QObject.connect( btnClose, SIGNAL( "clicked()" ), dlgAbout, SLOT( "close()" ) )

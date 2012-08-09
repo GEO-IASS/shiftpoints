@@ -186,7 +186,6 @@ class ShiftPointsThread( QThread ):
         lst = d[ wkt ]
         j = [ inFeat.id() ]
         j.extend( lst )
-        print j
         d[ wkt ] = j
 
       self.emit( SIGNAL( "updateProgress()" ) )
