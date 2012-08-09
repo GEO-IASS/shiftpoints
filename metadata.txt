@@ -2,7 +2,7 @@
 name = Shift Points
 description = Moves overlapped points in a circle around original position
 category = Vector
-version = 0.2.1
+version = 0.2.2
 qgisMinimumVersion = 1.0.0
 
 icon = icons/shiftpoints.png
@@ -15,5 +15,5 @@ homepage = http://gis-lab.info/qa/point-displacement-eng.html
 tracker = http://hub.qgis.org/projects/shiftpoints
 repository = http://github.com/alexbruy/shiftpoints
 
-experimental = True
+experimental = False
 deprecated = False
