@@ -41,8 +41,11 @@ def version():
 def qgisMinimumVersion():
   return "1.0.0"
 
-def authorName():
+def author():
   return "Alexander Bruy (NextGIS)"
+
+def email():
+  return "alexander.bruy@gmail.com"
 
 def icon():
   return "icons/shiftpoints.png"

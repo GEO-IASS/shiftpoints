@@ -5,9 +5,10 @@ category = Vector
 version = 0.2.2
 qgisMinimumVersion = 1.0.0
 
-icon = icons/shiftpoints.png
+author = Alexander Bruy (NextGIS)
+email = alexander.bruy@gmail.com
 
-authorName=Alexander Bruy (NextGIS)
+icon = icons/shiftpoints.png
 
 tags=vector, point, displacement
 
