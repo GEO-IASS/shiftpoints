@@ -1,20 +1,20 @@
 [general]
-name = Shift Points
-description = Moves overlapped points in a circle around original position
-category = Vector
-version = 0.2.2
-qgisMinimumVersion = 1.0.0
+name=Shift Points
+description=Moves overlapped points in a circle around original position
+category=Vector
+version=0.2.2
+qgisMinimumVersion=1.0.0
 
-author = Alexander Bruy (NextGIS)
-email = alexander.bruy@gmail.com
+author=Alexander Bruy (NextGIS)
+email=alexander.bruy@gmail.com
 
-icon = icons/shiftpoints.png
+icon=icons/shiftpoints.png
 
 tags=vector, point, displacement
 
-homepage = http://gis-lab.info/qa/point-displacement-eng.html
-tracker = http://hub.qgis.org/projects/shiftpoints
-repository = http://github.com/alexbruy/shiftpoints
+homepage=http://gis-lab.info/qa/point-displacement-eng.html
+tracker=http://hub.qgis.org/projects/shiftpoints
+repository=http://github.com/alexbruy/shiftpoints
 
-experimental = False
-deprecated = False
+experimental=False
+deprecated=False
