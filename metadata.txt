@@ -5,7 +5,7 @@ category=Vector
 version=0.2.2
 qgisMinimumVersion=1.0.0
 
-author=Alexander Bruy (NextGIS)
+author=Alexander Bruy
 email=alexander.bruy@gmail.com
 
 icon=icons/shiftpoints.png
@@ -17,4 +17,4 @@ tracker=http://hub.qgis.org/projects/shiftpoints
 repository=http://github.com/alexbruy/shiftpoints
 
 experimental=False
-deprecated=False
+deprecated=True
