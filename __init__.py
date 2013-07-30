@@ -7,7 +7,7 @@
 # Moves overlapped points with same coordinates in a circle around the
 # original position.
 #
-# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com), NextGIS
+# Copyright (C) 2011-2013 Alexander Bruy (alexander.bruy@gmail.com)
 #
 # This source is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
@@ -42,7 +42,7 @@ def qgisMinimumVersion():
   return "1.0.0"
 
 def author():
-  return "Alexander Bruy (NextGIS)"
+  return "Alexander Bruy"
 
 def email():
   return "alexander.bruy@gmail.com"
@@ -50,6 +50,6 @@ def email():
 def icon():
   return "icons/shiftpoints.png"
 
-def classFactory( iface ):
+def classFactory(iface):
   from shiftpoints import ShiftPointsPlugin
-  return ShiftPointsPlugin( iface )
+  return ShiftPointsPlugin(iface)

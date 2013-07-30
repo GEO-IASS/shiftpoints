@@ -1,5 +1,5 @@
 Shift Points
-----------------------------------------
+------------
 Shift Points is a simple QGIS Python plugin used to modify point shapefiles
 where several point features have the same position. With the normal display,
 it is hard to see if several features overlap.
@@ -10,16 +10,7 @@ original position. As you can see this is very close to work of the
 render-time, this plugin creates new shapefile with shifted (displaced)
 features.
 
-For more info please visit:
- * in Russian http://gis-lab.info/qa/point-displacement.html
- * in English http://gis-lab.info/qa/point-displacement-eng.html
-
-Source code can be found at:
-http://github.com/alexbruy/shiftpoints
-
-For bugreports please visit:
-http://hub.qgis.org/projects/shiftpoints
-
-
-        NextGIS - Open source geospatial solutions
-                    http://nextgis.org
+                      !!! IMPORTANT !!!
+This plugin now obsolete and exists only for historical reason. Please use
+SEXTANTE instead. For bug reports and feature requests use SEXTANTE bugtracker
+at: http://hub.qgis.org/projects/sextante/issues

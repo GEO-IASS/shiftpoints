@@ -7,7 +7,7 @@
 # Moves overlapped points with same coordinates in a circle around the
 # original position.
 #
-# Copyright (C) 2011 Alexander Bruy (alexander.bruy@gmail.com), NextGIS
+# Copyright (C) 2011-2013 Alexander Bruy (alexander.bruy@gmail.com)
 #
 # This source is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free
@@ -36,109 +36,109 @@ from ui_shiftpointsdialogbase import Ui_ShiftPointsDialog
 
 import math
 
-class ShiftPointsDialog( QDialog, Ui_ShiftPointsDialog ):
-  def __init__( self, iface ):
-    QDialog.__init__( self )
-    self.setupUi( self )
+class ShiftPointsDialog(QDialog, Ui_ShiftPointsDialog):
+  def __init__(self, iface):
+    QDialog.__init__(self)
+    self.setupUi(self)
     self.iface = iface
 
     self.outFileName = None
     self.outEncoding = None
     self.workThread = None
 
-    self.btnOk = self.buttonBox.button( QDialogButtonBox.Ok )
-    self.btnClose = self.buttonBox.button( QDialogButtonBox.Close )
+    self.btnOk = self.buttonBox.button(QDialogButtonBox.Ok)
+    self.btnClose = self.buttonBox.button(QDialogButtonBox.Close)
 
-    QObject.connect( self.btnBrowse, SIGNAL( "clicked()" ), self.outFile )
+    QObject.connect(self.btnBrowse, SIGNAL("clicked()"), self.outFile)
 
     self.manageGui()
 
-  def manageGui( self ):
+  def manageGui(self):
     myVectors = getPointLayerNames()
-    self.cmbInputLayer.addItems( myVectors )
+    self.cmbInputLayer.addItems(myVectors)
 
-  def outFile( self ):
-    ( self.outFileName, self.outEncoding ) = saveDialog( self )
+  def outFile(self):
+    (self.outFileName, self.outEncoding) = saveDialog(self)
     if self.outFileName is None or self.outEncoding is None:
       return
 
-    self.leOutputFile.setText( self.outFileName )
+    self.leOutputFile.setText(self.outFileName)
 
-  def accept( self ):
+  def accept(self):
     if self.outFileName is None:
-      QMessageBox.warning( self, self.tr( "Shift Points: Error" ),
-                           self.tr( "No output file selected. Please specify output filename." ) )
+      QMessageBox.warning(self, self.tr("Shift Points: Error"),
+                           self.tr("No output file selected. Please specify output filename."))
       return
 
     if self.spnRadius.value() == 0.0:
-      QMessageBox.warning( self, self.tr( "Shift Points: Error" ),
-                           self.tr( "Displacement distance is set to 0.0. Please specify correct value." ) )
+      QMessageBox.warning(self, self.tr("Shift Points: Error"),
+                           self.tr("Displacement distance is set to 0.0. Please specify correct value."))
       return
 
-    outFile = QFile( self.outFileName )
+    outFile = QFile(self.outFileName)
     if outFile.exists():
-      if not QgsVectorFileWriter.deleteShapeFile( self.outFileName ):
-        QMessageBox.warning( self, self.tr( "Shift Points: Error" ),
-                             self.tr( "Can't delete file %1" ).arg( outFileName ) )
+      if not QgsVectorFileWriter.deleteShapeFile(self.outFileName):
+        QMessageBox.warning(self, self.tr("Shift Points: Error"),
+                             self.tr("Can't delete file %1").arg(outFileName))
         return
 
-    QApplication.setOverrideCursor( QCursor( Qt.WaitCursor ) )
-    self.btnOk.setEnabled( False )
+    QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+    self.btnOk.setEnabled(False)
 
-    vLayer = getVectorLayerByName( self.cmbInputLayer.currentText() )
+    vLayer = getVectorLayerByName(self.cmbInputLayer.currentText())
 
-    self.workThread = ShiftPointsThread( vLayer, self.spnRadius.value(), self.chkRotate.isChecked(), self.outFileName, self.outEncoding )
-    QObject.connect( self.workThread, SIGNAL( "rangeChanged( PyQt_PyObject )" ), self.setProgressRange )
-    QObject.connect( self.workThread, SIGNAL( "updateProgress()" ), self.updateProgress )
-    QObject.connect( self.workThread, SIGNAL( "processFinished()" ), self.processFinished )
-    QObject.connect( self.workThread, SIGNAL( "processInterrupted()" ), self.processInterrupted )
+    self.workThread = ShiftPointsThread(vLayer, self.spnRadius.value(), self.chkRotate.isChecked(), self.outFileName, self.outEncoding)
+    QObject.connect(self.workThread, SIGNAL("rangeChanged(PyQt_PyObject)"), self.setProgressRange)
+    QObject.connect(self.workThread, SIGNAL("updateProgress()"), self.updateProgress)
+    QObject.connect(self.workThread, SIGNAL("processFinished()"), self.processFinished)
+    QObject.connect(self.workThread, SIGNAL("processInterrupted()"), self.processInterrupted)
 
-    self.btnClose.setText( self.tr( "Cancel" ) )
-    QObject.disconnect( self.buttonBox, SIGNAL( "rejected()" ), self.reject )
-    QObject.connect( self.btnClose, SIGNAL( "clicked()" ), self.stopProcessing )
+    self.btnClose.setText(self.tr("Cancel"))
+    QObject.disconnect(self.buttonBox, SIGNAL("rejected()"), self.reject)
+    QObject.connect(self.btnClose, SIGNAL("clicked()"), self.stopProcessing)
 
     self.workThread.start()
 
-  def setProgressRange( self, settings ):
-    self.progressBar.setFormat( settings[ 0 ] )
-    self.progressBar.setRange( 0, settings[ 1 ] )
-    self.progressBar.setValue( 0 )
+  def setProgressRange(self, settings):
+    self.progressBar.setFormat(settings[0])
+    self.progressBar.setRange(0, settings[1])
+    self.progressBar.setValue(0)
 
-  def updateProgress( self ):
-    self.progressBar.setValue( self.progressBar.value() + 1 )
+  def updateProgress(self):
+    self.progressBar.setValue(self.progressBar.value() + 1)
 
-  def processFinished( self ):
+  def processFinished(self):
     self.stopProcessing()
 
     if self.chkAddToCanvas.isChecked():
-      if not addShapeToCanvas( unicode( self.outFileName ) ):
-        QMessageBox.warning( self, self.tr( "Shift Points: Error" ), self.tr( "Error loading output shapefile:\n%1" ).arg( unicode( self.outFileName ) ) )
+      if not addShapeToCanvas(unicode(self.outFileName)):
+        QMessageBox.warning(self, self.tr("Shift Points: Error"), self.tr("Error loading output shapefile:\n%1").arg(unicode(self.outFileName)))
 
     self.restoreGui()
 
-  def processInterrupted( self ):
+  def processInterrupted(self):
     self.restoreGui()
 
-  def stopProcessing( self ):
+  def stopProcessing(self):
     if self.workThread != None:
       self.workThread.stop()
       self.workThread = None
 
-  def restoreGui( self ):
-    self.progressBar.setFormat( "%p%" )
-    self.progressBar.setRange( 0, 1 )
-    self.progressBar.setValue( 0 )
+  def restoreGui(self):
+    self.progressBar.setFormat("%p%")
+    self.progressBar.setRange(0, 1)
+    self.progressBar.setValue(0)
 
     QApplication.restoreOverrideCursor()
-    QObject.connect( self.buttonBox, SIGNAL( "rejected()" ), self.reject )
-    self.btnClose.setText( self.tr( "Close" ) )
-    self.btnOk.setEnabled( True )
+    QObject.connect(self.buttonBox, SIGNAL("rejected()"), self.reject)
+    self.btnClose.setText(self.tr("Close"))
+    self.btnOk.setEnabled(True)
 
 # ----------------------------------------------------------------------
 
-class ShiftPointsThread( QThread ):
-  def __init__( self, inVector, radius, rotate, outputFileName, outputEncoding ):
-    QThread.__init__( self, QThread.currentThread() )
+class ShiftPointsThread(QThread):
+  def __init__(self, inVector, radius, rotate, outputFileName, outputEncoding):
+    QThread.__init__(self, QThread.currentThread())
 
     self.vector = inVector
     self.displ = radius
@@ -146,13 +146,13 @@ class ShiftPointsThread( QThread ):
     self.outputFileName = outputFileName
     self.outputEncoding = outputEncoding
 
-    self.analyzeText = QCoreApplication.translate( "ShiftPointsDialog", "Analyze: %p%" )
-    self.displaceText = QCoreApplication.translate( "ShiftPointsDialog", "Displacement: %p%" )
+    self.analyzeText = QCoreApplication.translate("ShiftPointsDialog", "Analyze: %p%")
+    self.displaceText = QCoreApplication.translate("ShiftPointsDialog", "Displacement: %p%")
 
     self.mutex = QMutex()
     self.stopMe = 0
 
-  def run( self ):
+  def run(self):
     self.mutex.lock()
     self.stopMe = 0
     self.mutex.unlock()
@@ -165,30 +165,30 @@ class ShiftPointsThread( QThread ):
     wkbType = self.vector.wkbType()
     if not crs.isValid():
       crs = None
-    shapeFileWriter = QgsVectorFileWriter( self.outputFileName, self.outputEncoding, shapeFields, wkbType, crs )
+    shapeFileWriter = QgsVectorFileWriter(self.outputFileName, self.outputEncoding, shapeFields, wkbType, crs)
 
     featureCount = self.vector.featureCount()
-    self.emit( SIGNAL( "rangeChanged( PyQt_PyObject )" ), ( self.analyzeText, featureCount ) )
+    self.emit(SIGNAL("rangeChanged(PyQt_PyObject)"), (self.analyzeText, featureCount))
 
     allAttrs = vProvider.attributeIndexes()
-    vProvider.select( allAttrs )
+    vProvider.select(allAttrs)
     vProvider.rewind()
 
     d = dict()
     inFeat = QgsFeature()
-    while vProvider.nextFeature( inFeat ):
-      geom = QgsGeometry( inFeat.geometry() )
-      wkt = str( geom.exportToWkt() )
+    while vProvider.nextFeature(inFeat):
+      geom = QgsGeometry(inFeat.geometry())
+      wkt = str(geom.exportToWkt())
       if wkt not in d:
-        lst = [ inFeat.id() ]
-        d[ wkt ] = lst
+        lst = [inFeat.id()]
+        d[wkt] = lst
       else:
-        lst = d[ wkt ]
-        j = [ inFeat.id() ]
-        j.extend( lst )
-        d[ wkt ] = j
+        lst = d[wkt]
+        j = [inFeat.id()]
+        j.extend(lst)
+        d[wkt] = j
 
-      self.emit( SIGNAL( "updateProgress()" ) )
+      self.emit(SIGNAL("updateProgress()"))
 
       self.mutex.lock()
       s = self.stopMe
@@ -197,14 +197,14 @@ class ShiftPointsThread( QThread ):
         interrupted = True
         break
 
-    self.emit( SIGNAL( "rangeChanged( PyQt_PyObject )" ), ( self.displaceText, len( d ) ) )
+    self.emit(SIGNAL("rangeChanged(PyQt_PyObject)"), (self.displaceText, len(d)))
 
     for k, v in d.iteritems():
-      featNum = len( v )
+      featNum = len(v)
       if featNum == 1:
         f = QgsFeature()
-        self.vector.featureAtId( v[ 0 ], f )
-        shapeFileWriter.addFeature( f )
+        self.vector.featureAtId(v[0], f)
+        shapeFileWriter.addFeature(f)
       else:
         radius = self.displ
         fullPerimeter = 2 * math.pi
@@ -215,25 +215,25 @@ class ShiftPointsThread( QThread ):
           currentAngle = 0
         f = QgsFeature()
         for i in v:
-          sinusCurrentAngle = math.sin( currentAngle )
-          cosinusCurrentAngle = math.cos( currentAngle )
+          sinusCurrentAngle = math.sin(currentAngle)
+          cosinusCurrentAngle = math.cos(currentAngle)
           dx = radius * sinusCurrentAngle
           dy = radius * cosinusCurrentAngle
 
-          self.vector.featureAtId( i, f )
-          geom = QgsGeometry( f.geometry() ).asPoint()
+          self.vector.featureAtId(i, f)
+          geom = QgsGeometry(f.geometry()).asPoint()
           attrs = f.attributeMap()
 
-          p = QgsPoint( geom.x() + dx, geom.y() + dy )
+          p = QgsPoint(geom.x() + dx, geom.y() + dy)
           ft = QgsFeature()
           g = QgsGeometry()
-          ft.setGeometry( g.fromPoint( p ) )
-          ft.setAttributeMap( attrs )
+          ft.setGeometry(g.fromPoint(p))
+          ft.setAttributeMap(attrs)
 
-          shapeFileWriter.addFeature( ft )
+          shapeFileWriter.addFeature(ft)
           currentAngle += angleStep
 
-      self.emit( SIGNAL( "updateProgress()" ) )
+      self.emit(SIGNAL("updateProgress()"))
 
       self.mutex.lock()
       s = self.stopMe
@@ -243,62 +243,62 @@ class ShiftPointsThread( QThread ):
         break
 
     if not interrupted:
-      self.emit( SIGNAL( "processFinished()" ) )
+      self.emit(SIGNAL("processFinished()"))
     else:
-      self.emit( SIGNAL( "processInterrupted()" ) )
+      self.emit(SIGNAL("processInterrupted()"))
 
-  def stop( self ):
+  def stop(self):
     self.mutex.lock()
     self.stopMe = 1
     self.mutex.unlock()
 
-    QThread.wait( self )
+    QThread.wait(self)
 
 # ----------------------------------------------------------------------
 
-def addShapeToCanvas( shapeFilePath ):
-  fileInfo = QFileInfo( shapeFilePath )
+def addShapeToCanvas(shapeFilePath):
+  fileInfo = QFileInfo(shapeFilePath)
   if fileInfo.exists():
     layerName = fileInfo.completeBaseName()
   else:
     return False
 
-  vLayer = QgsVectorLayer( shapeFilePath, layerName, "ogr" )
+  vLayer = QgsVectorLayer(shapeFilePath, layerName, "ogr")
   if vLayer.isValid():
-    QgsMapLayerRegistry.instance().addMapLayer( vLayer )
+    QgsMapLayerRegistry.instance().addMapLayer(vLayer)
     return True
   else:
     return False
 
-def saveDialog( parent ):
+def saveDialog(parent):
   settings = QSettings()
-  dirName = settings.value( "/UI/lastShapefileDir" ).toString()
-  filtering = QString( "Shapefiles (*.shp)" )
-  encoding = settings.value( "/UI/encoding" ).toString()
-  title = QCoreApplication.translate( "ShiftPointsDialog", "Select output shapefile" )
+  dirName = settings.value("/UI/lastShapefileDir").toString()
+  filtering = QString("Shapefiles (*.shp)")
+  encoding = settings.value("/UI/encoding").toString()
+  title = QCoreApplication.translate("ShiftPointsDialog", "Select output shapefile")
 
-  fileDialog = QgsEncodingFileDialog( parent, title, dirName, filtering, encoding )
-  fileDialog.setDefaultSuffix( QString( "shp" ) )
-  fileDialog.setFileMode( QFileDialog.AnyFile )
-  fileDialog.setAcceptMode( QFileDialog.AcceptSave )
-  fileDialog.setConfirmOverwrite( True )
+  fileDialog = QgsEncodingFileDialog(parent, title, dirName, filtering, encoding)
+  fileDialog.setDefaultSuffix(QString("shp"))
+  fileDialog.setFileMode(QFileDialog.AnyFile)
+  fileDialog.setAcceptMode(QFileDialog.AcceptSave)
+  fileDialog.setConfirmOverwrite(True)
 
   if not fileDialog.exec_() == QDialog.Accepted:
     return None, None
 
   files = fileDialog.selectedFiles()
-  settings.setValue( "/UI/lastShapefileDir", QVariant( QFileInfo( unicode( files.first() ) ).absolutePath() ) )
-  return ( unicode( files.first() ), unicode( fileDialog.encoding() ) )
+  settings.setValue("/UI/lastShapefileDir", QVariant(QFileInfo(unicode(files.first())).absolutePath()))
+  return (unicode(files.first()), unicode(fileDialog.encoding()))
 
 def getPointLayerNames():
   layermap = QgsMapLayerRegistry.instance().mapLayers()
   layerlist = []
   for name, layer in layermap.iteritems():
     if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point:
-      layerlist.append( unicode( layer.name() ) )
+      layerlist.append(unicode(layer.name()))
   return layerlist
 
-def getVectorLayerByName( myName ):
+def getVectorLayerByName(myName):
   mapLayers = QgsMapLayerRegistry.instance().mapLayers()
   for name, layer in mapLayers.iteritems():
     if layer.type() == QgsMapLayer.VectorLayer and layer.name() == myName:
