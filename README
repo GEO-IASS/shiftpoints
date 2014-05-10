@@ -12,5 +12,6 @@ features.
 
                       !!! IMPORTANT !!!
 This plugin now obsolete and exists only for historical reason. Please use
-SEXTANTE instead. For bug reports and feature requests use SEXTANTE bugtracker
-at: http://hub.qgis.org/projects/processing/issues
+QGIS Processing framework (former SEXTANTE) instead. For bug reports and
+feature requests use Processing bugtracker at:
+http://hub.qgis.org/projects/sextante/issues

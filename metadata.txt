@@ -10,9 +10,9 @@ email=alexander.bruy@gmail.com
 
 icon=icons/shiftpoints.png
 
-tags=vector, point, displacement
+tags=vector,point,displacement
 
-homepage=http://gis-lab.info/qa/point-displacement-eng.html
+homepage=
 tracker=http://hub.qgis.org/projects/shiftpoints
 repository=http://github.com/alexbruy/shiftpoints
 
